@@ -370,7 +370,7 @@
     <maven.compiler.release>11</maven.compiler.release>
     <minimal-version.java>11</minimal-version.java>
     <minimal-version.maven>3.8.4</minimal-version.maven>
-    <mockito.version>4.8.0</mockito.version>
+    <mockito.version>4.8.1</mockito.version>
     <nexus-staging-plugin.version>1.6.13</nexus-staging-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <propertiesEncoding>ISO-8859-1</propertiesEncoding>
