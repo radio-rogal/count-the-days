@@ -309,10 +309,16 @@
         <version>${system-stubs.version}</version>
       </dependency>
       <dependency>
-        <artifactId>slf4j2-mock</artifactId>
+        <artifactId>mock-slf4j-impl</artifactId>
+        <groupId>com.ocarlsen.test</groupId>
+        <scope>test</scope>
+        <version>${mock-slf4j-impl.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>slf4j2-mock-impl</artifactId>
         <groupId>org.simplify4u</groupId>
         <scope>test</scope>
-        <version>${slf4j2-mock.version}</version>
+        <version>${slf4j2-mock-impl.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -348,17 +354,14 @@
   <name>Count the Days</name>
   <packaging>pom</packaging>
   <properties>
-    <!-- version -->
     <changelist>-SNAPSHOT</changelist>
     <clean-plugin.version>3.2.0</clean-plugin.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
-    <!-- java and maven -->
     <deploy-plugin.version>3.0.0</deploy-plugin.version>
     <enforcer-plugin.version>3.1.0</enforcer-plugin.version>
     <failsafe-plugin.version>2.22.2</failsafe-plugin.version>
     <flatten-plugin.version>1.3.0</flatten-plugin.version>
     <hamcrest-optional.version>2.0.0</hamcrest-optional.version>
-    <!-- plugins -->
     <hamcrest.version>2.2</hamcrest.version>
     <jacoco-plugin.version>0.8.8</jacoco-plugin.version>
     <jar-plugin.version>3.3.0</jar-plugin.version>
@@ -371,25 +374,23 @@
     <maven.compiler.release>11</maven.compiler.release>
     <minimal-version.java>11</minimal-version.java>
     <minimal-version.maven>3.8.4</minimal-version.maven>
+    <mock-slf4j-impl.version>2.0.0</mock-slf4j-impl.version>
     <mockito.version>4.8.1</mockito.version>
     <nexus-staging-plugin.version>1.6.13</nexus-staging-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <propertiesEncoding>ISO-8859-1</propertiesEncoding>
-    <!-- test -->
     <resources-plugin.version>3.3.0</resources-plugin.version>
     <revision>1.0.0</revision>
     <revision>1.0.0</revision>
     <sha1/>
     <sha1/>
     <shade-plugin.version>3.4.0</shade-plugin.version>
-    <!-- dependencies -->
     <sign-plugin.version>1.0.1</sign-plugin.version>
     <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
     <slf4j.version>2.0.3</slf4j.version>
     <slf4j2-mock.version>2.3.0</slf4j2-mock.version>
     <source-plugin.version>3.2.1</source-plugin.version>
     <surefire-plugin.version>2.22.2</surefire-plugin.version>
-    <!-- other -->
     <system-stubs.version>2.0.1</system-stubs.version>
   </properties>
   <scm>
