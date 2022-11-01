@@ -4,7 +4,7 @@ Please read this!
 Before opening a new issue, make sure to search for keywords in the issues
 filtered by the "bug" label:
 
-- https://gitlab.com/bot-by/slf4j-aws-lambda/-/issues/?label_name%5B%5D=bug
+- https://gitlab.com/bot-by/count-the-days/-/issues/?label_name%5B%5D=bug
 
 and verify the issue you're about to submit isn't a duplicate.
 --->
