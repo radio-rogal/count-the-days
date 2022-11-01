@@ -10,7 +10,7 @@ include:
 cache:
   paths:
     - .m2/repository
-    - target
+    - count-the-days-bot/target
 
 stages:
   - build
