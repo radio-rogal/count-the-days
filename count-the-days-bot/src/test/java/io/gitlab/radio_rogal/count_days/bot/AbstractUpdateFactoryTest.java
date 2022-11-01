@@ -1,11 +1,15 @@
 package io.gitlab.radio_rogal.count_days.bot;
 
 import static java.util.Collections.singleton;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -48,10 +52,11 @@ class AbstractUpdateFactoryTest {
   @ValueSource(strings = {" ", "{\"json\":\"bad\""})
   void wrongUpdate(String body) {
     // when
-    factory.parseUpdate(body);
+    var update = factory.parseUpdate(body);
 
     // then
     verify(logger).warn(startsWith("Wrong update:"), anyString(), eq(body));
+    assertNull(update);
   }
 
   @DisplayName("To handle an unknown update")
@@ -61,11 +66,12 @@ class AbstractUpdateFactoryTest {
     when(logger.isTraceEnabled()).thenReturn(false);
 
     // when
-    factory.parseUpdate("{\"test\":\"passed\"}");
+    var update = factory.parseUpdate("{\"test\":\"passed\"}");
 
     // then
     verify(logger).isTraceEnabled();
     verify(logger).info(eq("Unprocessed update: {}"), eq(singleton("test")));
+    assertNull(update);
   }
 
   @DisplayName("To handle and trace an unknown update")
@@ -75,22 +81,27 @@ class AbstractUpdateFactoryTest {
     when(logger.isTraceEnabled()).thenReturn(true);
 
     // when
-    factory.parseUpdate("{\"test\":\"passed\"}");
+    var update = factory.parseUpdate("{\"test\":\"passed\"}");
 
     // then
     verify(logger).isTraceEnabled();
     verify(logger).trace("{\"test\":\"passed\"}");
     verify(logger).info(eq("Unprocessed update: {}"), eq(singleton("test")));
+    assertNull(update);
   }
 
   @DisplayName("To handle a message")
   @Test
   void handleMessage() {
+    doAnswer(invocationOnMock -> mock(Update.class)).when(factory)
+        .parseMessage(isA(JSONObject.class));
+
     // when
-    factory.parseUpdate("{\"message\":{\"test\":\"passed\"}}");
+    var update = factory.parseUpdate("{\"message\":{\"test\":\"passed\"}}");
 
     // then
     verify(factory).parseMessage(isA(JSONObject.class));
+    assertNotNull(update);
   }
 
   static class TestUpdateFactory extends AbstractUpdateFactory {
