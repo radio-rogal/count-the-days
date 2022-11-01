@@ -15,6 +15,7 @@ cache:
 stages:
   - build
   - test
+  - verify
 
 build:
   stage: build
@@ -25,8 +26,6 @@ test:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS verify
-    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' count-the-days-bot/target/site/jacoco/jacoco.csv
-  coverage: '/(\d+\.?\d*) \% covered/'
 
 sast:
   stage: test
@@ -34,3 +33,16 @@ sast:
 spotbugs-sast:
   variables:
     SAST_JAVA_VERSION: 11
+
+coverage:
+  stage: verify
+  script:
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' count-the-days-bot/target/site/jacoco/jacoco.csv
+  coverage: '/(\d+\.?\d*) \% covered/'
+
+codacy:
+  stage: verify
+  script:
+    - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r count-the-days-bot/target/site/jacoco/jacoco.xml
+  rules:
+    - if: $CODACY_PROJECT_TOKEN
