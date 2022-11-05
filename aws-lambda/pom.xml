@@ -53,10 +53,6 @@
       <groupId>org.slf4j</groupId>
     </dependency>
     <dependency>
-      <artifactId>json</artifactId>
-      <groupId>org.json</groupId>
-    </dependency>
-    <dependency>
       <artifactId>aws-lambda-java-core</artifactId>
       <groupId>com.amazonaws</groupId>
       <version>${lambda-core.version}</version>
