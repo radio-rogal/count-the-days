@@ -33,6 +33,10 @@
         <groupId>org.codehaus.mojo</groupId>
         <version>${templating-plugin.version}</version>
       </plugin>
+      <plugin>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <groupId>org.jacoco</groupId>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
