@@ -1,9 +1,13 @@
 package io.gitlab.radio_rogal.count_days.aws_lambda;
 
 import static java.util.Collections.singletonMap;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringEndsWith.endsWith;
+import static org.hamcrest.text.CharSequenceLength.hasLength;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -18,8 +22,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -29,6 +36,8 @@ import org.slf4j.Logger;
 @Tag("fast")
 class BotHandlerTest {
 
+  @Captor
+  private ArgumentCaptor<String> bodyCaptor;
   @Mock
   private Context context;
   @Mock
@@ -109,12 +118,13 @@ class BotHandlerTest {
   }
 
   @DisplayName("An update throws an exception")
-  @Test
-  void updateThrowsException() throws Exception {
+  @ParameterizedTest
+  @CsvFileSource(resources = "/update-throws-an-exception.csv", numLinesToSkip = 1)
+  void updateThrowsException(int length, String endsWith, String body) throws Exception {
     // given
     when(context.getAwsRequestId()).thenReturn("test-id");
     when(requestEvent.getHeaders()).thenReturn(singletonMap("X-Forwarded-For", "1.2.3.4.5"));
-    when(requestEvent.getBody()).thenReturn("test body");
+    when(requestEvent.getBody()).thenReturn(body);
     when(updateFactory.parseUpdate(anyString())).thenReturn(update);
     when(update.call()).thenThrow(new Exception("test exception"));
 
@@ -123,13 +133,16 @@ class BotHandlerTest {
 
     // then
     verify(context).getAwsRequestId();
-    verify(updateFactory).parseUpdate("test body");
+    verify(updateFactory).parseUpdate(anyString());
     verify(update).call();
-    verify(logger).warn("Update call from {}: {}\n{}", "1.2.3.4.5", "test exception", "test body");
+    verify(logger).warn(eq("Update call from {}: {}\n{}"), eq("1.2.3.4.5"), eq("test exception"),
+        bodyCaptor.capture());
 
     assertAll("Response", () -> assertEquals("OK", responseEvent.getBody()),
         () -> assertEquals("text/plain", responseEvent.getHeaders().get("Content-Type")),
-        () -> assertEquals(200, responseEvent.getStatusCode()));
+        () -> assertEquals(200, responseEvent.getStatusCode()),
+        () -> assertThat(bodyCaptor.getValue(), hasLength(length)),
+        () -> assertThat(bodyCaptor.getValue(), endsWith(endsWith)));
   }
 
   @DisplayName("Happy path")
