@@ -13,8 +13,6 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import io.gitlab.radio_rogal.count_days.bot.Update;
 import io.gitlab.radio_rogal.count_days.bot.UpdateFactory;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -44,14 +42,6 @@ class BotHandlerTest {
 
   @InjectMocks
   private BotHandler handler;
-
-  @BeforeEach
-  void setUp() {
-  }
-
-  @AfterEach
-  void tearDown() {
-  }
 
   @DisplayName("A request event with an empty body")
   @ParameterizedTest(name = "[{index}] body <{0}>")

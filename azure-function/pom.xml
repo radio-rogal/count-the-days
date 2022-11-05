@@ -19,10 +19,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>azure-function</artifactId>
   <modelVersion>4.0.0</modelVersion>
+  <name>Azure Function</name>
   <parent>
     <artifactId>count-the-days</artifactId>
     <groupId>io.gitlab.radio_rogal.tg</groupId>
     <version>${revision}${changelist}${sha1}</version>
   </parent>
-  <name>Azure Function</name>
 </project>

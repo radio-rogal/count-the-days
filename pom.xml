@@ -239,8 +239,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.gitlab.radio_rogal.tg</groupId>
         <artifactId>telegram-bot</artifactId>
+        <groupId>io.gitlab.radio_rogal.tg</groupId>
         <version>${revision}${changelist}${sha1}</version>
       </dependency>
       <dependency>
