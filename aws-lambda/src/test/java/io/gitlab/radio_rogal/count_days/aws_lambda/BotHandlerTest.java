@@ -108,6 +108,30 @@ class BotHandlerTest {
         () -> assertEquals(200, responseEvent.getStatusCode()));
   }
 
+  @DisplayName("An update throws an exception")
+  @Test
+  void updateThrowsException() throws Exception {
+    // given
+    when(context.getAwsRequestId()).thenReturn("test-id");
+    when(requestEvent.getHeaders()).thenReturn(singletonMap("X-Forwarded-For", "1.2.3.4.5"));
+    when(requestEvent.getBody()).thenReturn("test body");
+    when(updateFactory.parseUpdate(anyString())).thenReturn(update);
+    when(update.call()).thenThrow(new Exception("test exception"));
+
+    // when
+    var responseEvent = handler.handleRequest(requestEvent, context);
+
+    // then
+    verify(context).getAwsRequestId();
+    verify(updateFactory).parseUpdate("test body");
+    verify(update).call();
+    verify(logger).warn("Update call from {}: {}\n{}", "1.2.3.4.5", "test exception", "test body");
+
+    assertAll("Response", () -> assertEquals("OK", responseEvent.getBody()),
+        () -> assertEquals("text/plain", responseEvent.getHeaders().get("Content-Type")),
+        () -> assertEquals(200, responseEvent.getStatusCode()));
+  }
+
   @DisplayName("Happy path")
   @Test
   void happyPath() throws Exception {
