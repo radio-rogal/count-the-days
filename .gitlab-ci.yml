@@ -27,6 +27,11 @@ test:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS verify
+  artifacts:
+    reports:
+      junit:
+        - telegram-bot/target/surefire-reports/TEST-*.xml
+        - aws-lambda/target/surefire-reports/TEST-*.xml
 
 sast:
   stage: test
