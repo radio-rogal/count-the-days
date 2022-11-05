@@ -17,36 +17,29 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>count-the-days-bot</artifactId>
+  <artifactId>aws-lambda</artifactId>
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <groupId>org.apache.maven.plugins</groupId>
-        <version>${failsafe-plugin.version}</version>
-      </plugin>
-      <plugin>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <groupId>org.jacoco</groupId>
-        <version>${jacoco-plugin.version}</version>
+        <artifactId>templating-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+            <id>filter-sources</id>
+          </execution>
+        </executions>
+        <groupId>org.codehaus.mojo</groupId>
+        <version>${templating-plugin.version}</version>
       </plugin>
     </plugins>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-      <resource>
-        <directory>${basedir}/..</directory>
-        <includes>
-          <include>LICENSE</include>
-          <include>NOTICE</include>
-        </includes>
-        <targetPath>META-INF</targetPath>
-      </resource>
-    </resources>
   </build>
   <dependencies>
+    <dependency>
+      <artifactId>telegram-bot</artifactId>
+      <groupId>io.gitlab.radio_rogal.tg</groupId>
+    </dependency>
     <dependency>
       <artifactId>annotations</artifactId>
       <groupId>org.jetbrains</groupId>
@@ -58,6 +51,16 @@
     <dependency>
       <artifactId>json</artifactId>
       <groupId>org.json</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>aws-lambda-java-core</artifactId>
+      <groupId>com.amazonaws</groupId>
+      <version>${lambda-core.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>aws-lambda-java-events</artifactId>
+      <groupId>com.amazonaws</groupId>
+      <version>${lambda-events.version}</version>
     </dependency>
     <dependency>
       <artifactId>junit-jupiter-api</artifactId>
@@ -96,15 +99,21 @@
       <groupId>uk.org.webcompere</groupId>
     </dependency>
     <dependency>
-      <artifactId>mock-slf4j-impl</artifactId>
-      <groupId>com.ocarlsen.test</groupId>
+      <artifactId>slf4j2-mock</artifactId>
+      <groupId>org.simplify4u</groupId>
     </dependency>
   </dependencies>
   <modelVersion>4.0.0</modelVersion>
-  <name>Telegram Bot</name>
+  <name>AWS Lambda</name>
   <parent>
     <artifactId>count-the-days</artifactId>
     <groupId>io.gitlab.radio_rogal.tg</groupId>
     <version>${revision}${changelist}${sha1}</version>
   </parent>
+  <properties>
+    <aws-request-id>request#</aws-request-id>
+    <lambda-core.version>1.2.1</lambda-core.version>
+    <lambda-events.version>3.11.0</lambda-events.version>
+    <templating-plugin.version>1.0.0</templating-plugin.version>
+  </properties>
 </project>

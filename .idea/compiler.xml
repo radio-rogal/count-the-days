@@ -6,8 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="count-the-days-bot" />
+        <module name="telegram-bot" />
+        <module name="google-cloud-function" />
+        <module name="azure-function" />
+        <module name="aws-lambda" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="azure-function (1)" target="11" />
+      <module name="azure-function (2)" target="11" />
+      <module name="google-clout-function-bot" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

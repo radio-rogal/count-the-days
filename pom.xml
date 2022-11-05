@@ -239,6 +239,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>io.gitlab.radio_rogal.tg</groupId>
+        <artifactId>telegram-bot</artifactId>
+        <version>${revision}${changelist}${sha1}</version>
+      </dependency>
+      <dependency>
         <artifactId>annotations</artifactId>
         <groupId>org.jetbrains</groupId>
         <version>${jetbrains-annotations.version}</version>
@@ -315,10 +320,10 @@
         <version>${mock-slf4j-impl.version}</version>
       </dependency>
       <dependency>
-        <artifactId>slf4j2-mock-impl</artifactId>
+        <artifactId>slf4j2-mock</artifactId>
         <groupId>org.simplify4u</groupId>
         <scope>test</scope>
-        <version>${slf4j2-mock-impl.version}</version>
+        <version>${slf4j2-mock.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -349,7 +354,10 @@
   </licenses>
   <modelVersion>4.0.0</modelVersion>
   <modules>
-    <module>count-the-days-bot</module>
+    <module>telegram-bot</module>
+    <module>aws-lambda</module>
+    <module>azure-function</module>
+    <module>google-cloud-function</module>
   </modules>
   <name>Count the Days</name>
   <packaging>pom</packaging>
