@@ -34,6 +34,28 @@
         <version>${templating-plugin.version}</version>
       </plugin>
       <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <classpathDependencyExcludes>
+            <classpathDependencyExclude>uk.bot-by:slf4j-aws-lambda</classpathDependencyExclude>
+          </classpathDependencyExcludes>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <classpathDependencyExcludes>
+            <classpathDependencyExclude>uk.bot-by:slf4j-aws-lambda</classpathDependencyExclude>
+          </classpathDependencyExcludes>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
         <artifactId>jacoco-maven-plugin</artifactId>
         <groupId>org.jacoco</groupId>
       </plugin>
@@ -61,6 +83,11 @@
       <artifactId>aws-lambda-java-events</artifactId>
       <groupId>com.amazonaws</groupId>
       <version>${lambda-events.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j-aws-lambda</artifactId>
+      <groupId>uk.bot-by</groupId>
+      <version>${slf4j-aws-lambda.version}</version>
     </dependency>
     <dependency>
       <artifactId>junit-jupiter-api</artifactId>
@@ -114,6 +141,7 @@
     <aws-request-id>request#</aws-request-id>
     <lambda-core.version>1.2.1</lambda-core.version>
     <lambda-events.version>3.11.0</lambda-events.version>
+    <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
     <templating-plugin.version>1.0.0</templating-plugin.version>
   </properties>
 </project>

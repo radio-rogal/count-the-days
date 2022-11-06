@@ -34,12 +34,14 @@ import org.slf4j.Logger;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("fast")
-class BotHandlerTest {
+class BotHandlerFastTest {
 
   @Captor
   private ArgumentCaptor<String> bodyCaptor;
   @Mock
   private Context context;
+  @InjectMocks
+  private BotHandler handler;
   @Mock
   private Logger logger;
   @Mock
@@ -48,9 +50,6 @@ class BotHandlerTest {
   private Update update;
   @Mock
   private UpdateFactory updateFactory;
-
-  @InjectMocks
-  private BotHandler handler;
 
   @DisplayName("A request event with an empty body")
   @ParameterizedTest(name = "[{index}] body <{0}>")

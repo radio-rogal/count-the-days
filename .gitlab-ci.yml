@@ -32,6 +32,7 @@ test:
       junit:
         - telegram-bot/target/surefire-reports/TEST-*.xml
         - aws-lambda/target/surefire-reports/TEST-*.xml
+        - aws-lambda/target/failsafe-reports/TEST-*.xml
 
 sast:
   stage: test
