@@ -17,6 +17,7 @@ stages:
   - build
   - test
   - verify
+  - deploy
 
 build:
   stage: build
