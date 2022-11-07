@@ -18,6 +18,69 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>azure-function</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>obj</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>azure-functions-maven-plugin</artifactId>
+        <configuration>
+          <appName>${function.name}</appName>
+          <appServicePlanName>java-functions-app-service-plan</appServicePlanName>
+          <appSettings>
+            <property>
+              <name>FUNCTIONS_EXTENSION_VERSION</name>
+              <value>~4</value>
+            </property>
+          </appSettings>
+          <region>westus</region>
+          <resourceGroup>java-functions-group</resourceGroup>
+          <runtime>
+            <javaVersion>${maven.compiler.release}</javaVersion>
+            <os>linux</os>
+          </runtime>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+            <id>package-functions</id>
+          </execution>
+        </executions>
+        <groupId>com.microsoft.azure</groupId>
+        <version>${azure-functions-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <artifactId>telegram-bot</artifactId>
+      <groupId>io.gitlab.radio_rogal.tg</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>annotations</artifactId>
+      <groupId>org.jetbrains</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>azure-functions-java-library</artifactId>
+      <groupId>com.microsoft.azure.functions</groupId>
+      <version>${azure-functions-library.version}</version>
+    </dependency>
+  </dependencies>
   <modelVersion>4.0.0</modelVersion>
   <name>Azure Function</name>
   <parent>
@@ -25,4 +88,9 @@
     <groupId>io.gitlab.radio_rogal.tg</groupId>
     <version>${revision}${changelist}${sha1}</version>
   </parent>
+  <properties>
+    <azure-functions-library.version>2.0.1</azure-functions-library.version>
+    <azure-functions-plugin.version>1.21.0</azure-functions-plugin.version>
+    <function.name>count-the-days-bot</function.name>
+  </properties>
 </project>

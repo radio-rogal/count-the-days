@@ -440,7 +440,6 @@
     <revision>1.0.0</revision>
     <revision>1.0.0</revision>
     <sha1/>
-    <sha1/>
     <shade-plugin.version>3.4.0</shade-plugin.version>
     <sign-plugin.version>1.0.1</sign-plugin.version>
     <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
