@@ -50,6 +50,9 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
           <classpathDependencyExcludes>
+            <classpathDependencyExclude>org.simplify4u:slf4j-mock-common
+            </classpathDependencyExclude>
+            <classpathDependencyExclude>org.simplify4u:slf4j2-mock</classpathDependencyExclude>
             <classpathDependencyExclude>uk.bot-by:slf4j-aws-lambda</classpathDependencyExclude>
           </classpathDependencyExcludes>
         </configuration>

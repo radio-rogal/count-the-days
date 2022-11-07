@@ -111,11 +111,6 @@
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
-            <classpathDependencyExcludes>
-              <classpathDependencyExclude>org.simplify4u:slf4j-mock-common
-              </classpathDependencyExclude>
-              <classpathDependencyExclude>org.simplify4u:slf4j2-mock</classpathDependencyExclude>
-            </classpathDependencyExcludes>
             <forkCount>1</forkCount>
             <includes>
               <include>**/*Test.java</include>
