@@ -45,7 +45,7 @@ spotbugs-sast:
 coverage:
   stage: verify
   script:
-    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' count-the-days-bot/target/site/jacoco/jacoco.csv
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' telegram-bot/target/site/jacoco/jacoco.csv aws-lambda/target/site/jacoco/jacoco.csv
   coverage: '/(\d+\.?\d*) \% covered/'
   rules:
     - if: $CI_DEFAULT_BRANCH == $CI_COMMIT_BRANCH
