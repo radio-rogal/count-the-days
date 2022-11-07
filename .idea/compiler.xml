@@ -12,10 +12,5 @@
         <module name="aws-lambda" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="azure-function (1)" target="11" />
-      <module name="azure-function (2)" target="11" />
-      <module name="google-clout-function-bot" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
