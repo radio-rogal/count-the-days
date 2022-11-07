@@ -62,6 +62,15 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <groupId>org.jacoco</groupId>
       </plugin>
+      <plugin>
+        <groupId>com.github.davidmoten</groupId>
+        <artifactId>aws-maven-plugin</artifactId>
+        <version>${aws-plugin.version}</version>
+        <configuration>
+          <artifact>${project.build.directory}/${project.build.finalName}.jar</artifact>
+          <functionName>${lambda.name}</functionName>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -141,9 +150,11 @@
     <version>${revision}${changelist}${sha1}</version>
   </parent>
   <properties>
+    <aws-plugin.version>0.2.33</aws-plugin.version>
     <aws-request-id>request#</aws-request-id>
     <lambda-core.version>1.2.1</lambda-core.version>
     <lambda-events.version>3.11.0</lambda-events.version>
+    <lambda.name>count-the-days-bot</lambda.name>
     <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
     <templating-plugin.version>1.0.0</templating-plugin.version>
   </properties>

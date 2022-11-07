@@ -55,3 +55,12 @@ codacy:
     - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r telegram-bot/target/site/jacoco/jacoco.xml -r aws-lambda/target/site/jacoco/jacoco.xml
   rules:
     - if: $CODACY_PROJECT_TOKEN
+
+
+aws-lambda:
+  stage: deploy
+  script:
+    - mvn -file aws-lambda/pom.xml aws:deployLambda
+  rules:
+    - if: $AWS_ACCESS_KEY && $AWS_SECRET_ACCESS_KEY && AWS_REGION
+      when: manual
