@@ -64,4 +64,3 @@ aws-lambda:
     - mvn -file aws-lambda/pom.xml aws:deployLambda
   rules:
     - if: $AWS_ACCESS_KEY && $AWS_SECRET_ACCESS_KEY && $AWS_REGION
-      when: manual
