@@ -17,18 +17,16 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>count-the-days-bot</artifactId>
+  <artifactId>telegram-bot</artifactId>
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <groupId>org.apache.maven.plugins</groupId>
-        <version>${failsafe-plugin.version}</version>
       </plugin>
       <plugin>
         <artifactId>jacoco-maven-plugin</artifactId>
         <groupId>org.jacoco</groupId>
-        <version>${jacoco-plugin.version}</version>
       </plugin>
     </plugins>
     <resources>

@@ -10,22 +10,30 @@ include:
 cache:
   paths:
     - .m2/repository
-    - count-the-days-bot/target
+    - telegram-bot/target
+    - aws-lambda/target
 
 stages:
   - build
   - test
   - verify
+  - deploy
 
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn $MAVEN_CLI_OPTS clean compile
 
 test:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS verify
+  artifacts:
+    reports:
+      junit:
+        - telegram-bot/target/surefire-reports/TEST-*.xml
+        - aws-lambda/target/surefire-reports/TEST-*.xml
+        - aws-lambda/target/failsafe-reports/TEST-*.xml
 
 sast:
   stage: test
@@ -45,6 +53,13 @@ coverage:
 codacy:
   stage: verify
   script:
-    - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r count-the-days-bot/target/site/jacoco/jacoco.xml
+    - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r telegram-bot/target/site/jacoco/jacoco.xml -r aws-lambda/target/site/jacoco/jacoco.xml
   rules:
     - if: $CODACY_PROJECT_TOKEN
+
+aws-lambda:
+  stage: deploy
+  script:
+    - mvn -file aws-lambda/pom.xml aws:deployLambda
+  rules:
+    - if: $AWS_ACCESS_KEY && $AWS_SECRET_ACCESS_KEY && $AWS_REGION
