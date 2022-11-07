@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright 2022 Witalij Berdinskich
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	    http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>aws-lambda</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>templating-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+            <id>filter-sources</id>
+          </execution>
+        </executions>
+        <groupId>org.codehaus.mojo</groupId>
+        <version>${templating-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <classpathDependencyExcludes>
+            <classpathDependencyExclude>uk.bot-by:slf4j-aws-lambda</classpathDependencyExclude>
+          </classpathDependencyExcludes>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <classpathDependencyExcludes>
+            <classpathDependencyExclude>org.simplify4u:slf4j-mock-common
+            </classpathDependencyExclude>
+            <classpathDependencyExclude>org.simplify4u:slf4j2-mock</classpathDependencyExclude>
+            <classpathDependencyExclude>uk.bot-by:slf4j-aws-lambda</classpathDependencyExclude>
+          </classpathDependencyExcludes>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <groupId>org.jacoco</groupId>
+      </plugin>
+      <plugin>
+        <groupId>com.github.davidmoten</groupId>
+        <artifactId>aws-maven-plugin</artifactId>
+        <version>${aws-plugin.version}</version>
+        <configuration>
+          <artifact>${project.build.directory}/${project.build.finalName}.jar</artifact>
+          <functionName>${lambda.name}</functionName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <artifactId>telegram-bot</artifactId>
+      <groupId>io.gitlab.radio_rogal.tg</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>annotations</artifactId>
+      <groupId>org.jetbrains</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>aws-lambda-java-core</artifactId>
+      <groupId>com.amazonaws</groupId>
+      <version>${lambda-core.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>aws-lambda-java-events</artifactId>
+      <groupId>com.amazonaws</groupId>
+      <version>${lambda-events.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j-aws-lambda</artifactId>
+      <groupId>uk.bot-by</groupId>
+      <version>${slf4j-aws-lambda.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-api</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-params</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>mockito-core</artifactId>
+      <groupId>org.mockito</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <groupId>org.mockito</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>hamcrest</artifactId>
+      <groupId>org.hamcrest</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>hamcrest-optional</artifactId>
+      <groupId>com.github.npathai</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>system-stubs-core</artifactId>
+      <groupId>uk.org.webcompere</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>system-stubs-jupiter</artifactId>
+      <groupId>uk.org.webcompere</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j2-mock</artifactId>
+      <groupId>org.simplify4u</groupId>
+    </dependency>
+  </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+  <name>AWS Lambda</name>
+  <parent>
+    <artifactId>count-the-days</artifactId>
+    <groupId>io.gitlab.radio_rogal.tg</groupId>
+    <version>${revision}${changelist}${sha1}</version>
+  </parent>
+  <properties>
+    <aws-plugin.version>0.2.33</aws-plugin.version>
+    <aws-request-id>request#</aws-request-id>
+    <lambda-core.version>1.2.1</lambda-core.version>
+    <lambda-events.version>3.11.0</lambda-events.version>
+    <lambda.name>count-the-days-bot</lambda.name>
+    <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
+    <templating-plugin.version>1.0.0</templating-plugin.version>
+  </properties>
+</project>

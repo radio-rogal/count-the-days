@@ -27,7 +27,6 @@ public class TelegramUtils {
   private static final String CHAT = "chat";
   private static final String ID = "id";
   private static final String MESSAGE_ID = "message_id";
-  private static final String NEW_CHAT_TITLE = "new_chat_title";
   private static final String TITLE = "title";
   private static final String VIA_BOT = "via_bot";
   // Telegram field values

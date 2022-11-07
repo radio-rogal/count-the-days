@@ -60,6 +60,55 @@
           <version>${jar-plugin.version}</version>
         </plugin>
         <plugin>
+          <artifactId>maven-shade-plugin</artifactId>
+          <configuration>
+            <artifactSet>
+              <excludes>
+                <exclude>org.jetbrains:annotations:*</exclude>
+              </excludes>
+            </artifactSet>
+            <createDependencyReducedPom>false</createDependencyReducedPom>
+            <filters>
+              <filter>
+                <artifact>*:*</artifact>
+                <excludes>
+                  <exclude>module-info.class</exclude>
+                  <exclude>META-INF/MANIFEST.MF</exclude>
+                  <exclude>META-INF/**/pom.properties</exclude>
+                  <exclude>META-INF/**/pom.xml</exclude>
+                </excludes>
+              </filter>
+            </filters>
+            <transformers>
+              <transformer
+                implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
+              </transformer>
+              <transformer
+                implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+              </transformer>
+              <transformer
+                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                <manifestEntries>
+                  <Homepage>${project.url}</Homepage>
+                </manifestEntries>
+              </transformer>
+              <transformer
+                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer">
+              </transformer>
+            </transformers>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <phase>package</phase>
+            </execution>
+          </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <version>${shade-plugin.version}</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
             <forkCount>1</forkCount>
@@ -239,6 +288,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <artifactId>telegram-bot</artifactId>
+        <groupId>io.gitlab.radio_rogal.tg</groupId>
+        <version>${revision}${changelist}${sha1}</version>
+      </dependency>
+      <dependency>
         <artifactId>annotations</artifactId>
         <groupId>org.jetbrains</groupId>
         <version>${jetbrains-annotations.version}</version>
@@ -315,10 +369,10 @@
         <version>${mock-slf4j-impl.version}</version>
       </dependency>
       <dependency>
-        <artifactId>slf4j2-mock-impl</artifactId>
+        <artifactId>slf4j2-mock</artifactId>
         <groupId>org.simplify4u</groupId>
         <scope>test</scope>
-        <version>${slf4j2-mock-impl.version}</version>
+        <version>${slf4j2-mock.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -349,7 +403,10 @@
   </licenses>
   <modelVersion>4.0.0</modelVersion>
   <modules>
-    <module>count-the-days-bot</module>
+    <module>telegram-bot</module>
+    <module>aws-lambda</module>
+    <module>azure-function</module>
+    <module>google-cloud-function</module>
   </modules>
   <name>Count the Days</name>
   <packaging>pom</packaging>
