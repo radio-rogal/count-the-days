@@ -32,6 +32,28 @@
         <groupId>org.apache.maven.plugins</groupId>
       </plugin>
       <plugin>
+        <artifactId>templating-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+            <id>filter-sources</id>
+          </execution>
+        </executions>
+        <groupId>org.codehaus.mojo</groupId>
+        <version>${templating-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <classpathDependencyExcludes>
+            <classpathDependencyExclude>org.slf4j:slf4j-simple</classpathDependencyExclude>
+          </classpathDependencyExcludes>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
         <artifactId>azure-functions-maven-plugin</artifactId>
         <configuration>
           <appName>${function.name}</appName>
@@ -60,6 +82,26 @@
         <groupId>com.microsoft.azure</groupId>
         <version>${azure-functions-plugin.version}</version>
       </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <classpathDependencyExcludes>
+            <classpathDependencyExclude>org.simplify4u:slf4j-mock-common
+            </classpathDependencyExclude>
+            <classpathDependencyExclude>org.simplify4u:slf4j2-mock</classpathDependencyExclude>
+            <classpathDependencyExclude>org.slf4j:slf4j-simple</classpathDependencyExclude>
+          </classpathDependencyExcludes>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+      </plugin>
+      <plugin>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <groupId>org.jacoco</groupId>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -76,9 +118,54 @@
       <groupId>org.slf4j</groupId>
     </dependency>
     <dependency>
+      <artifactId>slf4j-simple</artifactId>
+      <groupId>org.slf4j</groupId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
       <artifactId>azure-functions-java-library</artifactId>
       <groupId>com.microsoft.azure.functions</groupId>
       <version>${azure-functions-library.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-api</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-params</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>mockito-core</artifactId>
+      <groupId>org.mockito</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <groupId>org.mockito</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>hamcrest</artifactId>
+      <groupId>org.hamcrest</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>hamcrest-optional</artifactId>
+      <groupId>com.github.npathai</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>system-stubs-core</artifactId>
+      <groupId>uk.org.webcompere</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>system-stubs-jupiter</artifactId>
+      <groupId>uk.org.webcompere</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j2-mock</artifactId>
+      <groupId>org.simplify4u</groupId>
     </dependency>
   </dependencies>
   <modelVersion>4.0.0</modelVersion>
@@ -92,5 +179,6 @@
     <azure-functions-library.version>2.0.1</azure-functions-library.version>
     <azure-functions-plugin.version>1.21.0</azure-functions-plugin.version>
     <function.name>count-the-days-bot</function.name>
+    <templating-plugin.version>1.0.0</templating-plugin.version>
   </properties>
 </project>

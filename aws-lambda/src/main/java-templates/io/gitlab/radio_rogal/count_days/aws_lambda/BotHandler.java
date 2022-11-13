@@ -16,6 +16,7 @@
 package io.gitlab.radio_rogal.count_days.aws_lambda;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static java.util.Optional.empty;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -64,7 +65,7 @@ public class BotHandler implements
       try {
         var responseEventBody = (null != update) ? update.call() : null;
 
-        if (null != responseEventBody) {
+        if (nonNull(responseEventBody)) {
           responseEvent = Optional.of(LambdaUtils.getResponseEvent(update.call()));
         }
       } catch (Exception exception) {

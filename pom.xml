@@ -74,8 +74,11 @@
                 <excludes>
                   <exclude>module-info.class</exclude>
                   <exclude>META-INF/MANIFEST.MF</exclude>
+                  <exclude>META-INF/MSFTSIG.RSA</exclude>
+                  <exclude>META-INF/MSFTSIG.SF</exclude>
                   <exclude>META-INF/**/pom.properties</exclude>
                   <exclude>META-INF/**/pom.xml</exclude>
+                  <exclude>META-INF/versions/**</exclude>
                 </excludes>
               </filter>
             </filters>
