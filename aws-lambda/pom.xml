@@ -152,7 +152,7 @@
   <properties>
     <aws-plugin.version>0.2.33</aws-plugin.version>
     <aws-request-id>request#</aws-request-id>
-    <lambda-core.version>1.2.1</lambda-core.version>
+    <lambda-core.version>1.2.2</lambda-core.version>
     <lambda-events.version>3.11.0</lambda-events.version>
     <lambda.name>count-the-days-bot</lambda.name>
     <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
