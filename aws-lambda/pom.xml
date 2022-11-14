@@ -63,13 +63,13 @@
         <groupId>org.jacoco</groupId>
       </plugin>
       <plugin>
-        <groupId>com.github.davidmoten</groupId>
         <artifactId>aws-maven-plugin</artifactId>
-        <version>${aws-plugin.version}</version>
         <configuration>
           <artifact>${project.build.directory}/${project.build.finalName}.jar</artifact>
           <functionName>${lambda.name}</functionName>
         </configuration>
+        <groupId>com.github.davidmoten</groupId>
+        <version>${aws-plugin.version}</version>
       </plugin>
     </plugins>
   </build>

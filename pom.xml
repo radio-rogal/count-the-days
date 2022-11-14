@@ -74,8 +74,11 @@
                 <excludes>
                   <exclude>module-info.class</exclude>
                   <exclude>META-INF/MANIFEST.MF</exclude>
+                  <exclude>META-INF/MSFTSIG.RSA</exclude>
+                  <exclude>META-INF/MSFTSIG.SF</exclude>
                   <exclude>META-INF/**/pom.properties</exclude>
                   <exclude>META-INF/**/pom.xml</exclude>
+                  <exclude>META-INF/versions/**</exclude>
                 </excludes>
               </filter>
             </filters>
@@ -440,10 +443,8 @@
     <revision>1.0.0</revision>
     <revision>1.0.0</revision>
     <sha1/>
-    <sha1/>
     <shade-plugin.version>3.4.1</shade-plugin.version>
     <sign-plugin.version>1.0.1</sign-plugin.version>
-    <slf4j-aws-lambda.version>3.0.3</slf4j-aws-lambda.version>
     <slf4j.version>2.0.3</slf4j.version>
     <slf4j2-mock.version>2.3.0</slf4j2-mock.version>
     <source-plugin.version>3.2.1</source-plugin.version>

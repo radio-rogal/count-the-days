@@ -17,6 +17,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import io.gitlab.radio_rogal.count_days.bot.Update;
 import io.gitlab.radio_rogal.count_days.bot.UpdateFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -51,13 +52,17 @@ class BotHandlerFastTest {
   @Mock
   private UpdateFactory updateFactory;
 
+  @BeforeEach
+  void setUp() {
+    when(context.getAwsRequestId()).thenReturn("test-id");
+  }
+
   @DisplayName("A request event with an empty body")
   @ParameterizedTest(name = "[{index}] body <{0}>")
   @NullAndEmptySource
   @ValueSource(strings = " ")
   void emptyRequestEventBody(String body) {
     // given
-    when(context.getAwsRequestId()).thenReturn("test-id");
     when(requestEvent.getHeaders()).thenReturn(singletonMap("X-Forwarded-For", "1.2.3.4.5"));
     when(requestEvent.getBody()).thenReturn(body);
 
@@ -77,7 +82,6 @@ class BotHandlerFastTest {
   @Test
   void updateFactoryReturnsNull() throws Exception {
     // given
-    when(context.getAwsRequestId()).thenReturn("test-id");
     when(requestEvent.getBody()).thenReturn("test body");
 
     // when
@@ -98,7 +102,6 @@ class BotHandlerFastTest {
   @Test
   void updateReturnsNull() throws Exception {
     // given
-    when(context.getAwsRequestId()).thenReturn("test-id");
     when(requestEvent.getBody()).thenReturn("test body");
     when(updateFactory.parseUpdate(anyString())).thenReturn(update);
 
@@ -121,7 +124,6 @@ class BotHandlerFastTest {
   @CsvFileSource(resources = "/update-throws-an-exception.csv", numLinesToSkip = 1)
   void updateThrowsException(int length, String endsWith, String body) throws Exception {
     // given
-    when(context.getAwsRequestId()).thenReturn("test-id");
     when(requestEvent.getHeaders()).thenReturn(singletonMap("X-Forwarded-For", "1.2.3.4.5"));
     when(requestEvent.getBody()).thenReturn(body);
     when(updateFactory.parseUpdate(anyString())).thenReturn(update);
@@ -132,7 +134,7 @@ class BotHandlerFastTest {
 
     // then
     verify(context).getAwsRequestId();
-    verify(updateFactory).parseUpdate(anyString());
+    verify(updateFactory).parseUpdate(body);
     verify(update).call();
     verify(logger).warn(eq("Update call from {}: {}\n{}"), eq("1.2.3.4.5"), eq("test exception"),
         bodyCaptor.capture());
@@ -148,7 +150,6 @@ class BotHandlerFastTest {
   @Test
   void happyPath() throws Exception {
     // given
-    when(context.getAwsRequestId()).thenReturn("test-id");
     when(requestEvent.getBody()).thenReturn("test body");
     when(updateFactory.parseUpdate(anyString())).thenReturn(update);
     when(update.call()).thenReturn("{\"test\":\"pass\"}");
